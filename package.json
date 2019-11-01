@@ -21,9 +21,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.5.28",
     "compression": "^1.7.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.7.7",
     "ts-node-dev": "^1.0.0-pre.43",
     "typescript": "^3.6.4",
     "winston": "^3.2.1"
