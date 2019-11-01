@@ -2,6 +2,7 @@ import express from "express";
 import compression from "compression";  // compresses requests
 import mongoose from "mongoose";
 import { MONGODB_URI } from "./util/secrets";
+import { setupDatabase } from "./scripts/database"
 
 
 // Controllers (route handlers)
@@ -22,6 +23,7 @@ const app = express();
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } ).then(
     () => {
         console.log("Connected to MongoDB ", MONGODB_URI);
+        setupDatabase();
     },
 ).catch(err => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
