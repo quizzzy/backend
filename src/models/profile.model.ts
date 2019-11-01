@@ -6,24 +6,24 @@ const profileScheme = new Schema({
     questions: [{
         id: {
             type: ObjectId,
-            ref: 'Question'
+            ref: "Question"
         },
         answer: {
             type: ObjectId,
-            ref: 'Answer'
+            ref: "Answer"
         }
     }],
     scales: [{
         id: {
             type: ObjectId,
-            ref: 'Scale'
+            ref: "Scale"
         },
         category: {
             type: ObjectId,
-            ref: 'ScaleCategory'
+            ref: "ScaleCategory"
         },
         value: Number
     }],
-})
+});
 
 export const Profile = model("Profile", profileScheme);

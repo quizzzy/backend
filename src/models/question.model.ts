@@ -7,9 +7,9 @@ const questionScheme = new Schema({
     text: String,
     answers: [{
         type: ObjectId,
-        ref: 'Answer'
+        ref: "Answer"
     }],
     isReverted: Boolean
-})
+});
 
 export const Question = model("Question", questionScheme);

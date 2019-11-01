@@ -6,6 +6,6 @@ const scaleCategoryScheme = new Schema({
         low: Number, // including
         high: Number // not including
     }
-})
+});
 
 export const ScaleCategory = model("ScaleCategory", scaleCategoryScheme);
