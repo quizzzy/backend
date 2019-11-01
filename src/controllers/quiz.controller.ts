@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 /**
- * GET /
- * Home page.
+ * GET /quiz
+ * Quiz page.
  */
 export const index = (req: Request, res: Response) => {
-    res.send("home page");
+    res.end("Quiz page");
 };
