@@ -2,7 +2,7 @@ import express from "express";
 import compression from "compression";  // compresses requests
 import mongoose from "mongoose";
 import { MONGODB_URI } from "./util/secrets";
-import { setupDatabase } from "./scripts/database"
+import { setupDatabase } from "./scripts/database";
 
 
 // Controllers (route handlers)

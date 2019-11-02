@@ -15,7 +15,7 @@ export const getScale = (req: Request, res: Response) => {
 };
 
 /**
- * Post /api/scale/:od
+ * Post /api/scale/:id
  */
 export const postScale = (req: Request, res: Response) => {
     res.end("Scale");
