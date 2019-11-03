@@ -1,6 +1,8 @@
 import { Answer } from "../models/answer.model";
 import { Question } from "../models/question.model";
-
+import { ScaleCategory } from "../models/scale-category.model";
+import { Scale } from "../models/scale.model";
+import { User } from "../models/user.model";
 
 const answers = [
     { description: "Повністю не згоден", value: 1 },
@@ -16,19 +18,55 @@ const questions = [
     { description: "2. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: true },
 ];
 
+const scaleCategories = [
+    { description: "Category 1", range: { low: 0, high: 10 }},
+    { description: "Category 1", range: { low: 10, high: 20 }},
+    { description: "Category 1", range: { low: 20, high: 30 }},
+];
+
+const scales = [
+    { questions: [1, 2] },
+    { questions: [1] },
+    { questions: [2] }
+];
+
+const admin = {
+    login: "admin",
+    password: "nimda",
+    isAdmin: true
+};
+
 export const setupDatabase = async () => {
     console.log("Setup default database data");
 
     const savedAnswers = await saveModelsWithPromise(Answer, answers);
-    console.log('savedAnswers', savedAnswers);
+    console.log("savedAnswers", savedAnswers);
 
-    const answerIds: Array<string> = [];
-    savedAnswers.forEach((answer: any) => answerIds.push(answer.id));
+    const answerIds = getIdsFromElementsArray(savedAnswers);
     questions.forEach((question: any) => question.answers = answerIds);
 
     const savedQuestions = await saveModelsWithPromise(Question, questions);
-    console.log('savedQuestions', savedQuestions);
+    console.log("savedQuestions", savedQuestions);
 
+    const questionIds = getIdsFromElementsArray(savedQuestions);
+    console.log("questionIds", questionIds);
+
+    const savedScaleCategories = await saveModelsWithPromise(ScaleCategory, scaleCategories);
+    console.log("scaleCategories", savedScaleCategories);
+
+    const scaleCategoriesIds = getIdsFromElementsArray(savedScaleCategories);
+    scales.forEach((scale: any) => {
+        const questions: Array<string> = [];
+        scale.questions.forEach((questionIndex: any) => questions.push(questionIds[questionIndex -1]));
+        scale.categories = scaleCategoriesIds;
+        scale.questions = questions;
+    });
+
+    const savedScales = await saveModelsWithPromise(Scale, scales);
+    console.log("savedScales", savedScales);
+
+    const savedAdmin = await saveModelWithPromise(User, admin);
+    console.log("savedAdmin", savedAdmin);
 };
 
 
@@ -37,8 +75,8 @@ function saveModelWithPromise(Model: any, data: any): Promise<any> {
         new Model(data).save((err: any, data: any) => {
             if(err) rej(err);
             res(data);
-        })
-    })
+        });
+    });
 }
 
 function saveModelsWithPromise(Model: any, dataArray: Array<any>): Promise<any> {
@@ -46,4 +84,10 @@ function saveModelsWithPromise(Model: any, dataArray: Array<any>): Promise<any> 
     dataArray.forEach(data => promises.push(saveModelWithPromise(Model, data)));
     return Promise.all(promises);
 
+}
+
+function getIdsFromElementsArray(elements: Array<{id: string}>) {
+    const ids: Array<string> = [];
+    elements.forEach((element: {id: string}) => ids.push(element.id));
+    return ids;
 }
