@@ -40,19 +40,15 @@ export const setupDatabase = async () => {
     console.log("Setup default database data");
 
     const savedAnswers = await saveModelsWithPromise(Answer, answers);
-    console.log("savedAnswers", savedAnswers);
 
     const answerIds = getIdsFromElementsArray(savedAnswers);
     questions.forEach((question: any) => question.answers = answerIds);
 
     const savedQuestions = await saveModelsWithPromise(Question, questions);
-    console.log("savedQuestions", savedQuestions);
 
     const questionIds = getIdsFromElementsArray(savedQuestions);
-    console.log("questionIds", questionIds);
 
     const savedScaleCategories = await saveModelsWithPromise(ScaleCategory, scaleCategories);
-    console.log("scaleCategories", savedScaleCategories);
 
     const scaleCategoriesIds = getIdsFromElementsArray(savedScaleCategories);
     scales.forEach((scale: any) => {
@@ -63,14 +59,11 @@ export const setupDatabase = async () => {
     });
 
     const savedScales = await saveModelsWithPromise(Scale, scales);
-    console.log("savedScales", savedScales);
-
     const savedAdmin = await saveModelWithPromise(User, admin);
-    console.log("savedAdmin", savedAdmin);
 };
 
 
-function saveModelWithPromise(Model: any, data: any): Promise<any> {
+export function saveModelWithPromise(Model: any, data: any): Promise<any> {
     return new Promise((res, rej) => {
         new Model(data).save((err: any, data: any) => {
             if(err) rej(err);
@@ -79,14 +72,14 @@ function saveModelWithPromise(Model: any, data: any): Promise<any> {
     });
 }
 
-function saveModelsWithPromise(Model: any, dataArray: Array<any>): Promise<any> {
+export function saveModelsWithPromise(Model: any, dataArray: Array<any>): Promise<any> {
     const promises: Array<any> = []; 
     dataArray.forEach(data => promises.push(saveModelWithPromise(Model, data)));
     return Promise.all(promises);
 
 }
 
-function getIdsFromElementsArray(elements: Array<{id: string}>) {
+export function getIdsFromElementsArray(elements: Array<{id: string}>) {
     const ids: Array<string> = [];
     elements.forEach((element: {id: string}) => ids.push(element.id));
     return ids;

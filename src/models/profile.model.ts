@@ -4,21 +4,21 @@ const ObjectId = Schema.Types.ObjectId;
 
 const profileScheme = new Schema({
     questions: [{
-        id: {
+        questionId: {
             type: ObjectId,
             ref: "Question"
         },
-        answer: {
+        answerId: {
             type: ObjectId,
             ref: "Answer"
         }
     }],
     scales: [{
-        id: {
+        scaleId: {
             type: ObjectId,
             ref: "Scale"
         },
-        category: {
+        categoryId: {
             type: ObjectId,
             ref: "ScaleCategory"
         },

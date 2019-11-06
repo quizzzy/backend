@@ -1,8 +1,9 @@
 import express from "express";
 import compression from "compression";  // compresses requests
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
 import { MONGODB_URI } from "./util/secrets";
-import { setupDatabase } from "./scripts/database";
+import { setupDatabase } from "./util/database";
 
 
 // Controllers (route handlers)
@@ -33,6 +34,8 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, use
 // Express configuration
 app.set("port", process.env.PORT || 3000);
 app.use(compression());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  * Primary app routes.
@@ -62,7 +65,7 @@ app.post("/api/scale-category/:id", scaleCategoriesController.postScaleCategory)
 
 app.get("/api/profile", profilesController.getProfiles);
 app.get("/api/profile/:id", profilesController.getProfile);
-app.post("/api/profile/:id", profilesController.postProfile);
+app.post("/api/profile", profilesController.postProfile);
 
 app.get("/api/user", usersController.getUsers);
 app.get("/api/user/:id", usersController.getUser);
