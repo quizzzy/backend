@@ -1,6 +1,9 @@
 import { Response, Request } from "express";
 import { Profile } from "../models/profile.model";
 import { saveModelsWithPromise } from "../util/database";
+import { Answer } from "../models/answer.model";
+import { Scale } from "../models/scale.model";
+import { Question } from "../models/question.model";
 
 /**
  * GET /api/profiles
@@ -43,6 +46,40 @@ export const getProfile = (req: Request, res: Response) => {
  */
 export const postProfile = async (req: Request, res: Response) => {
     const profiles = req.body;
-    const savedProfiles = await saveModelsWithPromise(Profile, profiles);
-    res.send(savedProfiles);
+    // const savedProfiles = await saveModelsWithPromise(Profile, profiles);
+    handleProfileSave(profiles[0]);
+    // res.send(savedProfiles);
 };
+
+async function handleProfileSave(profile: any) {
+    const { questions } = profile;
+    const scales = await Scale.find();
+
+    const questionIdValueDictionary: any = {};
+    const scaleIdValueDictionary: any = {};
+
+    for (let i = 0; i < questions.length; i++) {
+        const { questionId, answerId } = questions[i];
+        const answers: any = await Answer.find({_id: answerId});
+        const questionsData: any = await Question.find({_id: questionId});
+        if (answers.length) {
+            questionIdValueDictionary[questionId] = questionsData.isReverted
+                ? 7 - answers[0].value
+                : answers[0].value;
+        };
+    }
+
+    for (let i = 0; i < scales.length; i++) {
+        const scale: any = scales[i];
+        for (let j = 0; j < scale.questions.length; j++) {
+            const scaleQuestionId = scale.questions[j];
+            if(!scaleIdValueDictionary[scale.id]) {
+                scaleIdValueDictionary[scale.id] = questionIdValueDictionary[scaleQuestionId];
+            } else {
+                scaleIdValueDictionary[scale.id] += questionIdValueDictionary[scaleQuestionId];
+            }
+        } 
+    }
+    console.log('questionIdValueDictionary', questionIdValueDictionary);
+    console.log('scaleIdValueDictionary', scaleIdValueDictionary);
+}

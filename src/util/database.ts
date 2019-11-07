@@ -17,6 +17,7 @@ const answers = [
 const questions = [
     { description: "1. Багато людей вважають мене люблячим і дбайливим.", isReverted: false },
     { description: "2. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: true },
+    { description: "3. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: false },
 ];
 
 const scaleCategories = [
@@ -26,9 +27,8 @@ const scaleCategories = [
 ];
 
 const scales = [
-    { questions: [1, 2] },
-    { questions: [1] },
-    { questions: [2] }
+    { questions: [1], title: "Шкала «Позитивні відносини з тими, що оточують»" },
+    { questions: [2, 3], title: "Шкала «Автономія»" },
 ];
 
 const admin = {

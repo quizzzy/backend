@@ -1,10 +1,12 @@
 import { Response, Request } from "express";
-
+import { Answer } from "../models/answer.model";
 /**
  * GET /api/answers
  */
 export const getAnswers = (req: Request, res: Response) => {
-    res.end("Answers");
+    Answer.find().then(answer => {
+        res.send(answer);
+    });
 };
 
 /**

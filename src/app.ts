@@ -49,7 +49,7 @@ app.get("/admin", adminController.index);
 app.get("/api/questions", questionsController.getQuestions);
 app.get("/api/questions/:id", questionsController.getQuestion);
 
-// app.get("/api/answer", answersController.getAnswers);
+app.get("/api/answers", answersController.getAnswers);
 // app.get("/api/answer/:id", answersController.getAnswer);
 // app.post("/api/answer/:id", answersController.postAnswer);
 
