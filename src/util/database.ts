@@ -3,6 +3,7 @@ import { Question } from "../models/question.model";
 import { ScaleCategory } from "../models/scale-category.model";
 import { Scale } from "../models/scale.model";
 import { User } from "../models/user.model";
+import { Model } from 'mongoose';
 
 const answers = [
     { description: "Повністю не згоден", value: 1 },
@@ -36,7 +37,14 @@ const admin = {
     isAdmin: true
 };
 
+
+
 export const setupDatabase = async () => {
+
+    console.log("Drop existing collections");
+
+    await dropCollectionsIfExists(Answer, Question, Scale, ScaleCategory, User);
+
     console.log("Setup default database data");
 
     const savedAnswers = await saveModelsWithPromise(Answer, answers);
@@ -62,6 +70,18 @@ export const setupDatabase = async () => {
     const savedAdmin = await saveModelWithPromise(User, admin);
 };
 
+
+export const dropCollectionsIfExists = async (...models: Array<Model<any>>) => {
+    for (let i = 0; i< models.length; i++) {
+        let list = await models[i].db.db.listCollections({
+            name: models[i].collection.name
+        }).toArray();
+        if(list.length > 0) {
+            await models[i].collection.drop();
+            console.log('drop', list[0].name);
+        }
+    }
+}
 
 export function saveModelWithPromise(Model: any, data: any): Promise<any> {
     return new Promise((res, rej) => {

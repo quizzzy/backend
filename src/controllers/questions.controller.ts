@@ -1,22 +1,23 @@
 import { Response, Request } from "express";
+import { Question } from "../models/question.model";
 
 /**
- * GET /api/question
+ * GET /api/questions
  */
 export const getQuestions = (req: Request, res: Response) => {
-    res.end("Questions");
+    Question.find()
+        .populate("answers")
+        .then(questions => {
+            res.send(questions);
+        });
 };
 
 /**
- * Get /api/question/:id
+ * Get /api/questions/:id
  */
 export const getQuestion = (req: Request, res: Response) => {
-    res.end("Question");
-};
-
-/**
- * Post /api/question/:id
- */
-export const postQuestion = (req: Request, res: Response) => {
-    res.end("Question");
+    const { id } = req.params;
+    Question.find({_id: id}).then(questtion => {
+        res.send(questtion);
+    });
 };
