@@ -80,6 +80,6 @@ async function handleProfileSave(profile: any) {
             }
         } 
     }
-    console.log('questionIdValueDictionary', questionIdValueDictionary);
-    console.log('scaleIdValueDictionary', scaleIdValueDictionary);
+    console.log("questionIdValueDictionary", questionIdValueDictionary);
+    console.log("scaleIdValueDictionary", scaleIdValueDictionary);
 }
