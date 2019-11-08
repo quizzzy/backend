@@ -16,9 +16,9 @@ const answers = [
 ];
 
 const questions = [
-    { description: "1. Багато людей вважають мене люблячим і дбайливим.", isReverted: false },
-    { description: "2. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: true },
-    { description: "3. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: false },
+    { description: "1. Багато людей вважають мене люблячим і дбайливим.", isReverted: false, order: 1 },
+    { description: "2. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: true, order: 2 },
+    { description: "3. Іноді я змінюю свою поведінку або образ думок, щоб відповідати запитам оточуючих.", isReverted: false, order: 3 },
 ];
 
 const scaleCategories = [

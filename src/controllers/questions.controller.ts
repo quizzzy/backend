@@ -4,9 +4,10 @@ import { Question } from "../models/question.model";
 /**
  * GET /api/questions
  */
-export const getQuestions = (req: Request, res: Response) => {
-    Question.find()
+export const getQuestions = async (req: Request, res: Response) => {
+    await Question.find()
         .populate("answers")
+        .sort('order')
         .then(questions => {
             res.send(questions);
         });
