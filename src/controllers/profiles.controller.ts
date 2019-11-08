@@ -34,52 +34,97 @@ export const getProfile = (req: Request, res: Response) => {
         questions: [
             {questionId: "5dc2bd9634fb7ab584b9eb3c", answerId: "5dc2bd9634fb7ab584b9eb38"},
             {questionId: "5dc2bd9634fb7ab584b9eb3d", answerId: "5dc2bd9634fb7ab584b9eb3b"},
-            {questionId: "5dc2bdb8962540b597bfa448", answerId: "5dc2bdb8962540b597bfa442"},
-        ],
-        scales: [
-            {scaleId: "5dc2cfd9fbec1ab968687b63", categoryId: "5dc2cfd9fbec1ab968687b60", value: 10},
-            {scaleId: "5dc2cfd9fbec1ab968687b62", categoryId: "5dc2cfd9fbec1ab968687b5f", value: 20},
-            {scaleId: "5dc2cfd9fbec1ab968687b61", categoryId: "5dc2cfd9fbec1ab968687b60", value: 30},
+            {questionId: "5dc2bdb8962540b597bfa448", answerId: "5dc2bdb8962540b597bfa442"}
         ]
     }]
  * 
+ * Response format:
+ * [
+        {
+            scaleTitle: 'Scale1',
+            value: 10,
+            categories: [
+                {
+                    title: 'Low values',
+                    description: 'You are blablalba',
+                    range: { low: 0, high: 10 }
+                },
+                {
+                    title: 'High values',
+                    description: 'You are blablalba',
+                    range: { low: 10, high: 20 }
+                }
+            ]
+        }
+    ]
  */
 export const postProfile = async (req: Request, res: Response) => {
     const profiles = req.body;
+
+    const { questions } = profiles[0];
+
+    const questionValueDictionary = await createQuestionValueDictionary(questions, Answer, Question);
+    const scaleValueDictionary = await createScaleValueDictionary(questionValueDictionary, Scale);
+    
+    const scalesData = await createScalesData(scaleValueDictionary, Scale);
+
+    res.send(scalesData);
+
     // const savedProfiles = await saveModelsWithPromise(Profile, profiles);
-    handleProfileSave(profiles[0]);
-    // res.send(savedProfiles);
 };
 
-async function handleProfileSave(profile: any) {
-    const { questions } = profile;
-    const scales = await Scale.find();
 
-    const questionIdValueDictionary: any = {};
-    const scaleIdValueDictionary: any = {};
-
+async function createQuestionValueDictionary(questions: Array<any>, Answer: any, Question: any) {
+    const questionValueDictionary: any = {};
     for (let i = 0; i < questions.length; i++) {
         const { questionId, answerId } = questions[i];
         const answers: any = await Answer.find({_id: answerId});
         const questionsData: any = await Question.find({_id: questionId});
         if (answers.length) {
-            questionIdValueDictionary[questionId] = questionsData.isReverted
+            questionValueDictionary[questionId] = questionsData[0].isReverted
                 ? 7 - answers[0].value
                 : answers[0].value;
         };
     }
+    return questionValueDictionary;
+}
+
+async function createScaleValueDictionary(questionValueDictionary: any, Scale: any) {
+    const scaleValueDictionary: any = {};
+    const scales = await Scale.find();
 
     for (let i = 0; i < scales.length; i++) {
         const scale: any = scales[i];
         for (let j = 0; j < scale.questions.length; j++) {
             const scaleQuestionId = scale.questions[j];
-            if(!scaleIdValueDictionary[scale.id]) {
-                scaleIdValueDictionary[scale.id] = questionIdValueDictionary[scaleQuestionId];
+            if(!scaleValueDictionary[scale.id]) {
+                scaleValueDictionary[scale.id] = questionValueDictionary[scaleQuestionId];
             } else {
-                scaleIdValueDictionary[scale.id] += questionIdValueDictionary[scaleQuestionId];
+                scaleValueDictionary[scale.id] += questionValueDictionary[scaleQuestionId];
             }
-        } 
+        }
     }
-    console.log('questionIdValueDictionary', questionIdValueDictionary);
-    console.log('scaleIdValueDictionary', scaleIdValueDictionary);
+    return scaleValueDictionary;
+}
+
+async function createScalesData(scaleValueDictionary: any, Scale: any) {
+    const scalesData: any = [];
+    const scales = await Scale.find().populate('categories.categoryId');
+
+    scales.forEach((scale: any) => {
+        const scaleData: any = {
+            scaleTitle: scale.title,
+            value: scaleValueDictionary[scale.id] || null,
+            categories: []
+        };
+        scale.categories.forEach((category: any) => {
+            scaleData.categories.push({
+                title: category.categoryId.title,
+                description: category.description,
+                range: category.categoryId.range
+            });
+        });
+        scalesData.push(scaleData);
+    });
+    return scalesData;
 }

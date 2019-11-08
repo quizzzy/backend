@@ -9,8 +9,8 @@ const scaleScheme = new Schema({
         ref: "Question"
     }],
     categories: [{
-        type: ObjectId,
-        ref: "ScaleCategory"
+        categoryId: {type: ObjectId, ref: "ScaleCategory"},
+        description: String
     }],
 });
 

@@ -3,7 +3,7 @@ import { Question } from "../models/question.model";
 import { ScaleCategory } from "../models/scale-category.model";
 import { Scale } from "../models/scale.model";
 import { User } from "../models/user.model";
-import { Model } from 'mongoose';
+import { Model } from "mongoose";
 
 const answers = [
     { description: "Повністю не згоден", value: 1 },
@@ -21,14 +21,27 @@ const questions = [
 ];
 
 const scaleCategories = [
-    { description: "Category 1", range: { low: 0, high: 10 }},
-    { description: "Category 1", range: { low: 10, high: 20 }},
-    { description: "Category 1", range: { low: 20, high: 30 }},
+    { title: "Високі значення", range: { low: 0, high: 10 }},
+    { title: "Низькі значення", range: { low: 10, high: 20 }}
 ];
 
 const scales = [
-    { questions: [1], title: "Шкала «Позитивні відносини з тими, що оточують»" },
-    { questions: [2, 3], title: "Шкала «Автономія»" },
+    { 
+        questions: [1],
+        title: "Шкала «Позитивні відносини з тими, що оточують»", 
+        categories: [
+            {categoryId: '', description: 'description1'},
+            {categoryId: '', description: 'description2'}
+        ]
+    },
+    { 
+        questions: [2, 3],
+        title: "Шкала «Автономія»",
+        categories: [
+            {description: 'description1'},
+            {description: 'description2'}
+        ]
+    },
 ];
 
 const admin = {
@@ -61,8 +74,8 @@ export const setupDatabase = async () => {
     const scaleCategoriesIds = getIdsFromElementsArray(savedScaleCategories);
     scales.forEach((scale: any) => {
         const questions: Array<string> = [];
-        scale.questions.forEach((questionIndex: any) => questions.push(questionIds[questionIndex -1]));
-        scale.categories = scaleCategoriesIds;
+        scale.questions.forEach((questionIndex: any) => questions.push(questionIds[questionIndex - 1]));
+        scale.categories.forEach((category: any, index: number) => category.categoryId = scaleCategoriesIds[index]);
         scale.questions = questions;
     });
 
@@ -73,15 +86,15 @@ export const setupDatabase = async () => {
 
 export const dropCollectionsIfExists = async (...models: Array<Model<any>>) => {
     for (let i = 0; i< models.length; i++) {
-        let list = await models[i].db.db.listCollections({
+        const list = await models[i].db.db.listCollections({
             name: models[i].collection.name
         }).toArray();
         if(list.length > 0) {
             await models[i].collection.drop();
-            console.log('drop', list[0].name);
+            console.log("drop", list[0].name);
         }
     }
-}
+};
 
 export function saveModelWithPromise(Model: any, data: any): Promise<any> {
     return new Promise((res, rej) => {
