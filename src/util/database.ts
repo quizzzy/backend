@@ -3,6 +3,7 @@ import { Question } from "../models/question.model";
 import { ScaleCategory } from "../models/scale-category.model";
 import { Scale } from "../models/scale.model";
 import { User } from "../models/user.model";
+import { Profile } from "../models/profile.model";
 import { Model } from "mongoose";
 
 const answers = [
@@ -56,7 +57,7 @@ export const setupDatabase = async () => {
 
     console.log("Drop existing collections");
 
-    await dropCollectionsIfExists(Answer, Question, Scale, ScaleCategory, User);
+    await dropCollectionsIfExists(Answer, Question, Scale, ScaleCategory, User, Profile);
 
     console.log("Setup default database data");
 

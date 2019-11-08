@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { Profile } from "../models/profile.model";
-import { saveModelsWithPromise } from "../util/database";
+import { saveModelWithPromise } from "../util/database";
 import { Answer } from "../models/answer.model";
 import { Scale } from "../models/scale.model";
 import { Question } from "../models/question.model";
@@ -70,7 +70,7 @@ export const postProfile = async (req: Request, res: Response) => {
 
     res.send(scalesData);
 
-    // const savedProfiles = await saveModelsWithPromise(Profile, profiles);
+    saveProfileToDb(questions, scaleValueDictionary, Profile, Scale);
 };
 
 
@@ -127,4 +127,23 @@ async function createScalesData(scaleValueDictionary: any, Scale: any) {
         scalesData.push(scaleData);
     });
     return scalesData;
+}
+
+async function saveProfileToDb(questions: Array<any>, scaleValueDictionary: any, Profile: any, Scale: any) {
+    const scales = await Scale.find();
+    const scalesToSave: any = [];
+    
+    scales.forEach((scale: any) => {
+        scalesToSave.push({
+            scaleId: scale.id,
+            value: scaleValueDictionary[scale.id] || null
+        })
+    })
+    const profileData = {
+        questions,
+        scales: scalesToSave
+    }
+    console.log('scalesToSave', scalesToSave)
+    const res =  await saveModelWithPromise(Profile, profileData);
+    console.log('res', res);
 }
