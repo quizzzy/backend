@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const scaleCategoryScheme = new Schema({
-    description: String,
+    title: String,
     range: {
         low: Number, // including
         high: Number // not including

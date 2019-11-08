@@ -18,11 +18,7 @@ const profileScheme = new Schema({
             type: ObjectId,
             ref: "Scale"
         },
-        categoryId: {
-            type: ObjectId,
-            ref: "ScaleCategory"
-        },
-        value: Number
+        value: Number,
     }],
 });
 

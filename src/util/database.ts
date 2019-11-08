@@ -3,6 +3,7 @@ import { Question } from "../models/question.model";
 import { ScaleCategory } from "../models/scale-category.model";
 import { Scale } from "../models/scale.model";
 import { User } from "../models/user.model";
+import { Profile } from "../models/profile.model";
 import { Model } from "mongoose";
 
 const answers = [
@@ -21,14 +22,27 @@ const questions = [
 ];
 
 const scaleCategories = [
-    { description: "Category 1", range: { low: 0, high: 10 }},
-    { description: "Category 1", range: { low: 10, high: 20 }},
-    { description: "Category 1", range: { low: 20, high: 30 }},
+    { title: "Високі значення", range: { low: 0, high: 10 }},
+    { title: "Низькі значення", range: { low: 10, high: 20 }}
 ];
 
 const scales = [
-    { questions: [1], title: "Шкала «Позитивні відносини з тими, що оточують»" },
-    { questions: [2, 3], title: "Шкала «Автономія»" },
+    { 
+        questions: [1],
+        title: "Шкала «Позитивні відносини з тими, що оточують»", 
+        categories: [
+            {categoryId: '', description: 'description1'},
+            {categoryId: '', description: 'description2'}
+        ]
+    },
+    { 
+        questions: [2, 3],
+        title: "Шкала «Автономія»",
+        categories: [
+            {description: 'description1'},
+            {description: 'description2'}
+        ]
+    },
 ];
 
 const admin = {
@@ -43,7 +57,7 @@ export const setupDatabase = async () => {
 
     console.log("Drop existing collections");
 
-    await dropCollectionsIfExists(Answer, Question, Scale, ScaleCategory, User);
+    await dropCollectionsIfExists(Answer, Question, Scale, ScaleCategory, User, Profile);
 
     console.log("Setup default database data");
 
@@ -61,8 +75,8 @@ export const setupDatabase = async () => {
     const scaleCategoriesIds = getIdsFromElementsArray(savedScaleCategories);
     scales.forEach((scale: any) => {
         const questions: Array<string> = [];
-        scale.questions.forEach((questionIndex: any) => questions.push(questionIds[questionIndex -1]));
-        scale.categories = scaleCategoriesIds;
+        scale.questions.forEach((questionIndex: any) => questions.push(questionIds[questionIndex - 1]));
+        scale.categories.forEach((category: any, index: number) => category.categoryId = scaleCategoriesIds[index]);
         scale.questions = questions;
     });
 
