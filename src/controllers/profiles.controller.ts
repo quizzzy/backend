@@ -143,7 +143,5 @@ async function saveProfileToDb(questions: Array<any>, scaleValueDictionary: any,
         questions,
         scales: scalesToSave
     }
-    console.log('scalesToSave', scalesToSave)
-    const res =  await saveModelWithPromise(Profile, profileData);
-    console.log('res', res);
+    return await saveModelWithPromise(Profile, profileData);
 }
