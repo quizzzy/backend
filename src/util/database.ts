@@ -47,10 +47,8 @@ const scales = [
 
 const admin = {
     login: "admin",
-    password: "nimda",
-    isAdmin: true
+    password: "nimda"
 };
-
 
 
 export const setupDatabase = async () => {
@@ -81,7 +79,8 @@ export const setupDatabase = async () => {
     });
 
     const savedScales = await saveModelsWithPromise(Scale, scales);
-    const savedAdmin = await saveModelWithPromise(User, admin);
+    const savedUser = await saveModelWithPromise(User, admin);
+    console.log('savedUser', savedUser);
 };
 
 
