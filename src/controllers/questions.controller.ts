@@ -7,7 +7,7 @@ import { Question } from "../models/question.model";
 export const getQuestions = async (req: Request, res: Response) => {
     await Question.find()
         .populate("answers")
-        .sort('order')
+        .sort("order")
         .then(questions => {
             res.send(questions);
         });

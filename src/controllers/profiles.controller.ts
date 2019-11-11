@@ -4,6 +4,8 @@ import { saveModelWithPromise } from '../util/database';
 import { Answer } from '../models/answer.model';
 import { Scale } from '../models/scale.model';
 import { Question } from '../models/question.model';
+import PDFDocument from 'pdfkit';
+import path from 'path';
 
 /**
  * GET /api/profiles
@@ -15,15 +17,77 @@ export const getProfiles = (req: Request, res: Response) => {
 	});
 };
 
+function getProfilePDF(response: Response, profile: any) {
+	const document = new PDFDocument();
+	document.pipe(response);
+
+	document.registerFont(
+		'DejaVuSans',
+		path.join(__dirname, '../public/fonts/DejaVuSans.ttf')
+	);
+
+	profile.scales.forEach((scale: any) => {
+		document.fontSize(18);
+		document.font('DejaVuSans').text(scale.scaleId.title, {
+			underline: true,
+		});
+		document.moveDown(0.3);
+		document.fontSize(14);
+		document.font('DejaVuSans').text(`Ваш результат: ${scale.value}`);
+
+		document.moveDown(0.8);
+		document.font('DejaVuSans').text('Категорії:');
+		document.moveDown(0.8);
+		scale.scaleId.categories.forEach((category: any) => {
+			document.fontSize(12);
+			document.font('DejaVuSans').text(category.categoryId.title, {});
+			document.moveDown(0.3);
+			document.font('DejaVuSans').text(category.description);
+			document.moveDown(1);
+			document.fontSize(10);
+			document
+				.font('DejaVuSans')
+				.text(
+					`Мінімальне значення категорії: ${category.categoryId.range.low}`
+				);
+			document.moveDown(0.2);
+			document
+				.font('DejaVuSans')
+				.text(
+					`Максимальне значення категорії: ${category.categoryId.range.high}`
+				);
+			document.moveDown(0.8);
+		});
+
+		document.moveDown(3);
+	});
+
+	document.end();
+}
+
 /**
  * Get /api/profiles/:id
  * Response - [profile]
  */
-export const getProfile = (req: Request, res: Response) => {
+export const getProfile = async (req: Request, response: Response) => {
 	const { id } = req.params;
-	Profile.find({ _id: id }).then(profile => {
-		res.send(profile);
+	const format = req.query.format || 'json';
+
+	const profile = await Profile.findOne({ _id: id }).populate({
+		path: 'scales.scaleId',
+		populate: { path: 'categories.categoryId' },
 	});
+
+	switch (format) {
+		case 'json':
+			response.json(profile);
+			break;
+		case 'document':
+			getProfilePDF(response, profile);
+			break;
+		default:
+			response.json(profile);
+	}
 };
 
 /**
@@ -38,7 +102,9 @@ export const getProfile = (req: Request, res: Response) => {
     }
  * 
  * Response format:
- * [
+ * {
+	 id: "5dc2bd9634fb7ab584b9eb3c",
+	 scales: [
         {
             scaleTitle: 'Scale1',
             value: 10,
@@ -56,6 +122,7 @@ export const getProfile = (req: Request, res: Response) => {
             ]
         }
     ]
+ }
  */
 export const postProfile = async (req: Request, res: Response) => {
 	const { questions } = req.body;
@@ -72,9 +139,9 @@ export const postProfile = async (req: Request, res: Response) => {
 
 	const scalesData = await createScalesData(scaleValueDictionary, Scale);
 
-	res.send(scalesData);
-
-	saveProfileToDb(questions, scaleValueDictionary, Profile, Scale);
+	saveProfileToDb(questions, scaleValueDictionary, Profile, Scale).then(
+		profile => res.json({ id: profile._id, scales: scalesData })
+	);
 };
 
 async function createQuestionValueDictionary(
@@ -125,6 +192,7 @@ async function createScalesData(scaleValueDictionary: any, Scale: any) {
 
 	scales.forEach((scale: any) => {
 		const scaleData: any = {
+			id: scale._id,
 			scaleTitle: scale.title,
 			value: scaleValueDictionary[scale.id] || null,
 			categories: [],

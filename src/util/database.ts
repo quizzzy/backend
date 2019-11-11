@@ -31,16 +31,16 @@ const scales = [
         questions: [1],
         title: "Шкала «Позитивні відносини з тими, що оточують»", 
         categories: [
-            {categoryId: '', description: 'description1'},
-            {categoryId: '', description: 'description2'}
+            {categoryId: "", description: "description1"},
+            {categoryId: "", description: "description2"}
         ]
     },
     { 
         questions: [2, 3],
         title: "Шкала «Автономія»",
         categories: [
-            {description: 'description1'},
-            {description: 'description2'}
+            {description: "description1"},
+            {description: "description2"}
         ]
     },
 ];
