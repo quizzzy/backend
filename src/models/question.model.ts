@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema } from "mongoose";
 
 const ObjectId = Schema.Types.ObjectId;
 
@@ -9,9 +9,9 @@ const questionScheme = new Schema({
 	answers: [
 		{
 			type: ObjectId,
-			ref: 'Answer',
+			ref: "Answer",
 		},
 	],
 });
 
-export const Question = model('Question', questionScheme);
+export const Question = model("Question", questionScheme);
