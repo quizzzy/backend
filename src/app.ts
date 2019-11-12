@@ -20,6 +20,7 @@ import * as adminController from './controllers/admin.controller';
 import * as questionsController from './controllers/questions.controller';
 import * as answersController from './controllers/answers.controller';
 import * as profilesController from './controllers/profiles.controller';
+import * as scalesController from './controllers/scales.controller';
 
 // Create Express server
 const app = express();
@@ -70,7 +71,7 @@ app.get('/api/answers', answersController.getAnswers);
 // app.get("/api/answer/:id", answersController.getAnswer);
 // app.post("/api/answer/:id", answersController.postAnswer);
 
-// app.get("/api/scale", scalesController.getScales);
+app.get('/api/scales', scalesController.getScales);
 // app.get("/api/scale/:id", scalesController.getScale);
 // app.post("/api/scale/:id", scalesController.postScale);
 
