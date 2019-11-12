@@ -12,9 +12,14 @@ import path from 'path';
  * Response - [profile1, profile2]
  */
 export const getProfiles = (req: Request, res: Response) => {
-	Profile.find().then(profiles => {
-		res.send(profiles);
-	});
+	Profile.find()
+		.populate({
+			path: 'scales.scaleId',
+			populate: { path: 'categories.categoryId' },
+		})
+		.then(profiles => {
+			res.send(profiles);
+		});
 };
 
 function getProfilePDF(response: Response, profile: any) {
