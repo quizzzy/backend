@@ -30,7 +30,7 @@ export const questions = [
     },
     {
         description:
-            "6. Коли я проглядаю історію свого життя, я випробовую задово- лення від того, як все склалося.",
+            "6. Коли я проглядаю історію свого життя, я випробовую задоволення від того, як все склалося.",
         isReverted: false,
         order: 6
     },
@@ -59,7 +59,7 @@ export const questions = [
     },
     {
         description:
-            "11. Я живу одним днем і не замислююся серйозно щодо май- бутнього.",
+            "11. Я живу одним днем і не замислююся серйозно щодо майбутнього.",
         isReverted: true,
         order: 11
     },
@@ -71,8 +71,8 @@ export const questions = [
     },
     {
         description:
-            "13. Я часто відчуваю себе самотнім через те, що у мене мало близьких друзів, з якими є можливість поділитися своїми пере- живаннями.",
-        isReverted: false,
+            "13. Я часто відчуваю себе самотнім через те, що у мене мало близьких друзів, з якими є можливість поділитися своїми переживаннями.",
+        isReverted: true,
         order: 13
     },
     {
@@ -83,7 +83,7 @@ export const questions = [
     {
         description:
             "15. Я не дуже добре відповідаю людям і оточуючому суспільству",
-        isReverted: false,
+        isReverted: true,
         order: 15
     },
     {
@@ -94,13 +94,13 @@ export const questions = [
     {
         description:
             "17. Я прагну зосередитися на сьогоденні, оскільки майбутнє майже постійно приносить мені проблеми.",
-        isReverted: false,
+        isReverted: true,
         order: 17
     },
     {
         description:
             "17. Я прагну зосередитися на сьогоденні, оскільки майбутнє майже постійно приносить мені проблеми.",
-        isReverted: false,
+        isReverted: true,
         order: 18
     },
     {
@@ -112,7 +112,7 @@ export const questions = [
     {
         description:
             "20. Я схильний турбуватися про те, що оточуючи думають про мене.",
-        isReverted: false,
+        isReverted: true,
         order: 20
     },
     {
@@ -124,7 +124,7 @@ export const questions = [
     {
         description:
             "22. Я не хочу що-небудь робити по-новому, в моєму житті мене все влаштовує таким, як воно є.",
-        isReverted: false,
+        isReverted: true,
         order: 22
     },
     {
@@ -134,7 +134,7 @@ export const questions = [
     },
     {
         description: "24. Була б можливість, я б багато що в собі змінив.",
-        isReverted: false,
+        isReverted: true,
         order: 24
     },
     {
@@ -151,7 +151,7 @@ export const questions = [
     },
     {
         description: "27. Я часто відчуваю себе заваленим своїми обов’язками.",
-        isReverted: false,
+        isReverted: true,
         order: 27
     },
     {
@@ -162,8 +162,8 @@ export const questions = [
     },
     {
         description:
-            "29. Мої повсякденні справи здаються мені банальними і незнач- ними.",
-        isReverted: false,
+            "29. Мої повсякденні справи здаються мені банальними і незначними.",
+        isReverted: true,
         order: 29
     },
     {
@@ -174,13 +174,13 @@ export const questions = [
     {
         description:
             "31. Я знаю небагато людей, охочих вислухати, коли мені потрібне з кимсь поговорити.",
-        isReverted: false,
+        isReverted: true,
         order: 31
     },
     {
         description:
-            "32. Я схильний піддаватися впливу людей з твердими переко- наннями.",
-        isReverted: false,
+            "32. Я схильний піддаватися впливу людей з твердими переконаннями.",
+        isReverted: true,
         order: 32
     },
     {
@@ -192,13 +192,13 @@ export const questions = [
     {
         description:
             "34. Якщо подумати, я не досяг більшого як особистість за останні декілька років.",
-        isReverted: false,
+        isReverted: true,
         order: 34
     },
     {
         description:
             "35. Я не маю чіткого усвідомлення того, чого я намагаюся до- сягти в житті.",
-        isReverted: false,
+        isReverted: true,
         order: 35
     },
     {
@@ -213,8 +213,7 @@ export const questions = [
         order: 37
     },
     {
-        description:
-            "38. Люди рідко переконують мене робити те, що я не хочу .",
+        description: "38. Люди рідко переконують мене робити те, що я не хочу.",
         isReverted: false,
         order: 38
     },
@@ -232,32 +231,32 @@ export const questions = [
     },
     {
         description:
-            "41. Я звик ставити перед собою цілі, але зараз це здається мар- ною тратою часу.",
-        isReverted: false,
+            "41. Я звик ставити перед собою цілі, але зараз це здається марною тратою часу.",
+        isReverted: true,
         order: 41
     },
     {
         description:
             "42. У багатьох відношеннях я відчуваю розчарування щодо моїх досягнень в житті.",
-        isReverted: false,
+        isReverted: true,
         order: 42
     },
     {
         description:
             "43. Мені здається, що у більшості оточуючих людей більше друзів, ніж у мене.",
-        isReverted: false,
+        isReverted: true,
         order: 43
     },
     {
         description:
-            "44. Для мене важливіше пристосуватися до інших, ніж залиши- тися одному зі своїми принципами.",
-        isReverted: false,
+            "44. Для мене важливіше пристосуватися до інших, ніж залишитися одному зі своїми принципами.",
+        isReverted: true,
         order: 44
     },
     {
         description:
             "45. Я відчуваю стрес через те, що не можу впоратися зі всіма справами, які я вимушений робити щодня.",
-        isReverted: false,
+        isReverted: true,
         order: 45
     },
     {
@@ -310,31 +309,31 @@ export const questions = [
     },
     {
         description: "54. Я заздрю тому, як живуть більшість людей.",
-        isReverted: false,
+        isReverted: true,
         order: 54
     },
     {
         description:
             "55. У мене ніколи не було досить теплих і довірливих стосунків з іншими.",
-        isReverted: false,
+        isReverted: true,
         order: 55
     },
     {
         description:
-            "56. Мені складно висловлювати свою думку щодо спірних пи- тань.",
-        isReverted: false,
+            "56. Мені складно висловлювати свою думку щодо спірних питань.",
+        isReverted: true,
         order: 56
     },
     {
         description:
-            "57. Кожен мій день розписаний, але я отримую відчуття задово- лення від того, що зі всім справляюся.",
+            "57. Кожен мій день розписаний, але я отримую відчуття задоволення від того, що зі всім справляюся.",
         isReverted: false,
         order: 57
     },
     {
         description:
-            "58. Мені не подобається опинятися в нових ситуаціях, які вима- гають від мене зміни старого доброго способу дії.",
-        isReverted: false,
+            "58. Мені не подобається опинятися в нових ситуаціях, які вимагають від мене зміни старого доброго способу дії.",
+        isReverted: true,
         order: 58
     },
     {
@@ -346,25 +345,25 @@ export const questions = [
     {
         description:
             "60. Моє ставлення до себе, ймовірно, не таке позитивне, як те, що відчувають до себе більшість людей.",
-        isReverted: false,
+        isReverted: true,
         order: 60
     },
     {
         description:
             "61. Я часто відчуваю, що залишаюся осторонь, коли справа стосується дружби.",
-        isReverted: false,
+        isReverted: true,
         order: 61
     },
     {
         description:
             "62. Я часто змінюю свої рішення, якщо мої друзі або члени сім’ї не згодні з ними.",
-        isReverted: false,
+        isReverted: true,
         order: 62
     },
     {
         description:
             "63. Я відчуваю напругу, коли намагаюся розпланувати свої дії, оскільки я ніколи не виконую до кінця все, що запланував.",
-        isReverted: false,
+        isReverted: true,
         order: 63
     },
     {
@@ -376,13 +375,13 @@ export const questions = [
     {
         description:
             "65. Іноді мені здається, що я зробив все в моєму житті, що було потрібно.",
-        isReverted: false,
+        isReverted: true,
         order: 65
     },
     {
         description:
             "66. Багато днів я прокидаюся пригнічений думками про те, як я прожив своє життя.",
-        isReverted: false,
+        isReverted: true,
         order: 66
     },
     {
@@ -424,25 +423,25 @@ export const questions = [
     {
         description:
             "73. Мені складно по-справжньому відкритися, коли я спілкуюся з оточуючими.",
-        isReverted: false,
+        isReverted: true,
         order: 73
     },
     {
         description:
             "74. Мене турбує те, як люди оцінюють вибори, зроблені мною в житті.",
-        isReverted: false,
+        isReverted: true,
         order: 74
     },
     {
         description:
             "75. Мені складно розпланувати своє життя так, щоб мене це влаштовувало.",
-        isReverted: false,
+        isReverted: true,
         order: 75
     },
     {
         description:
             "76. Я давним-давно перестав намагатися поліпшити або змінити що-небудь в своєму житті.",
-        isReverted: false,
+        isReverted: true,
         order: 76
     },
     {
@@ -476,19 +475,19 @@ export const questions = [
     {
         description:
             "82. Правильно говорять, що старого пса новим трюкам не навчиш.",
-        isReverted: false,
+        isReverted: true,
         order: 82
     },
     {
         description:
             "83. Зрештою я можу з упевненістю сказати, що моє життя не багато стоїть.",
-        isReverted: false,
+        isReverted: true,
         order: 83
     },
     {
         description:
-            "84. У всіх є свої недоліки, але, здається, у мене їх більш ніж до- статньо.",
-        isReverted: false,
+            "84. У всіх є свої недоліки, але, здається, у мене їх більш ніж достатньо.",
+        isReverted: true,
         order: 84
     }
 ];
