@@ -4,12 +4,13 @@ import { Profile } from '../models/profile.model';
 import { Scale } from '../models/scale.model';
 import { SECRET } from '../util/secrets';
 import jwt from 'jsonwebtoken';
+import path from 'path';
 
 /**
  * Get /admin
  */
 export const index = (req: Request, res: Response) => {
-	res.send(200);
+	res.sendFile(path.join(__dirname + './../public/admin/build/index.html'));
 };
 
 /**
