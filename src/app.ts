@@ -56,6 +56,7 @@ app.use(cookieParser());
  */
 app.get('/quiz', quizController.index);
 app.get('/admin', withAuth, adminController.index);
+app.get('/admin/statistics', adminController.getStatistics);
 app.post('/admin/login', adminController.login);
 app.post('/admin/logout', adminController.logout);
 app.get('/admin/check-token', withAuth, adminController.checkToken);
